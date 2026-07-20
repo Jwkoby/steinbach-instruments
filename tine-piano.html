@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Tine Piano · Steinbach Instruments</title>
 <link rel="stylesheet" href="assets/css/fonts.css" />
+<link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="assets/icons/favicon-32.png" sizes="32x32" type="image/png" />
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png" />
 <link rel="stylesheet" href="assets/css/styles.css" />
 <style>
   :root{
@@ -37,20 +40,11 @@
     overflow:hidden;
     border-bottom:1px solid var(--line);
   }
-  .hero-img{
-    position:absolute; top:0; bottom:0; left:50%;
-    width:calc(100svh * 1.333); /* image aspect ratio 2000x1500 */
-    max-width:100%;
-    transform:translateX(-50%);
-    background:url("assets/images/rhodes-render.jpg") center top / cover no-repeat;
-    -webkit-mask-image:linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
-    mask-image:linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
-  }
   .hero-bg{
     position:absolute; inset:0;
     background:
-      linear-gradient(180deg, rgba(11,9,8,0.35) 0%, rgba(11,9,8,0.05) 36%, rgba(11,9,8,0.18) 45%, rgba(11,9,8,0.88) 72%, var(--void) 90%, var(--void) 100%),
-      radial-gradient(ellipse at 50% 20%, rgba(193,120,47,0.10), transparent 55%);
+      radial-gradient(ellipse at 50% 20%, rgba(193,120,47,0.14), transparent 55%),
+      linear-gradient(180deg, var(--void-2) 0%, var(--void) 62%, var(--void) 100%);
   }
   .hero-bg::after{
     content:"";
@@ -319,11 +313,6 @@
   @media (max-width:720px){
     .section{ padding:88px 0; }
     .cta{ padding:100px 0; }
-    .hero-img{
-      -webkit-mask-image:none; mask-image:none;
-      background-size:auto 100%;
-      background-position:center -14svh; /* negative = Bild nach oben schieben */
-    }
   }
 </style>
 </head>
@@ -355,7 +344,6 @@
 <main id="top">
 
   <section class="hero">
-    <div class="hero-img"></div>
     <div class="hero-bg"></div>
     <div class="hero-beam"></div>
     <div class="hero-content">
@@ -424,7 +412,7 @@
         <div class="instrument-text reveal">
           <div class="eyebrow">The Instrument</div>
           <h2 style="font-family:var(--font-display); font-weight:340; font-size:clamp(2rem,4vw,3rem); margin:16px 0 26px;">The sound of a decade. <i style="color:var(--brass-bright); font-style:italic; font-weight:300;">Bottled.</i></h2>
-          <p>The instrument behind this library is a <strong>Fender Rhodes Mark II</strong>: the electric stage piano that defined the sound of soul, jazz and pop throughout the 1970s. Instead of strings, small metal tines ring against electromagnetic pickups: an utterly simple mechanism with an unmistakable voice.</p>
+          <p>The instrument behind this library is a <strong>Fender Rhodes Mark I</strong>: the electric stage piano that defined the sound of soul, jazz and pop throughout the 1970s. Instead of strings, small metal tines ring against electromagnetic pickups: an utterly simple mechanism with an unmistakable voice.</p>
           <p>Half a century on, well-preserved instruments are becoming rare. Tines fatigue and snap, pickups drift, and many surviving units have been heavily modified away from their original tone.</p>
           <p class="pull-quote">No two tine pianos sound alike. This one is worth remembering.</p>
         </div>
