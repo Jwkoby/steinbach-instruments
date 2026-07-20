@@ -4,9 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Instruments · Steinbach Instruments</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/fonts.css" />
 <link rel="stylesheet" href="assets/css/styles.css" />
 <style>
   :root{
@@ -48,75 +46,87 @@
     margin:0;
   }
 
-  /* ---------- ENTRIES ---------- */
-  .entries{ padding-bottom:40px; }
-  .entry{
+  /* ---------- GALLERY ---------- */
+  .gallery{ padding:24px 0 130px; }
+  .gallery-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:clamp(32px, 5vw, 72px);
-    align-items:center;
-    padding:96px 0;
-    border-bottom:1px solid var(--line);
+    gap:clamp(56px, 6vw, 84px) clamp(28px, 3.5vw, 48px);
   }
-  .entry:last-child{ border-bottom:none; }
-  .entry:nth-of-type(even) .entry-visual{ order:2; }
-  .entry-visual{
+  .plate-card{
+    display:block;
+    text-decoration:none;
+    color:inherit;
+  }
+  .plate-visual{
     position:relative;
-    min-height:400px;
+    aspect-ratio:4 / 5;
     border-radius:3px;
     overflow:hidden;
-    border:1px solid var(--line);
     background:
       radial-gradient(ellipse at 50% 42%, var(--accent-glow, rgba(181,138,74,0.15)), transparent 70%),
       linear-gradient(155deg, #1c1714, #0e0c0b 75%);
   }
-  .entry-visual img{
+  .plate-visual img{
     position:absolute; inset:0;
     width:100%; height:100%;
     object-fit:cover;
-    filter:brightness(0.85);
+    filter:brightness(0.94);
+    transition:transform 0.7s cubic-bezier(0.25,0.1,0.25,1), filter 0.7s ease;
   }
-  .entry-visual .visual-label{
-    position:absolute; left:14px; bottom:12px; right:14px;
+  .plate-card:hover .plate-visual img{
+    transform:scale(1.025);
+    filter:brightness(1.02);
+  }
+  .plate-visual::after{
+    content:"";
+    position:absolute; left:0; right:0; bottom:0; height:26%;
+    background:linear-gradient(180deg, transparent, rgba(11,9,8,0.55));
+    pointer-events:none;
+  }
+  .plate-visual .visual-label{
+    position:absolute; left:16px; bottom:14px; right:16px;
+    z-index:2;
     display:flex; justify-content:space-between; gap:12px;
     font-family:var(--font-mono); font-size:0.62rem; letter-spacing:0.08em;
     text-transform:uppercase;
     color:var(--parchment-dim);
   }
-  .entry-visual .visual-label span:last-child{ color:var(--accent, var(--brass)); }
+  .plate-visual .visual-label span:last-child{ color:var(--accent, var(--brass)); }
 
-  .entry-num{
+  .plate-meta{ padding:22px 2px 0; }
+  .plate-num{
     display:block;
     font-family:var(--font-mono);
-    font-size:0.75rem;
+    font-size:0.72rem;
     letter-spacing:0.14em;
+    text-transform:uppercase;
     color:var(--accent-bright, var(--brass-bright));
-    margin-bottom:14px;
+    margin-bottom:10px;
   }
-  .entry-info h2{
+  .plate-title-row{
+    display:flex; align-items:baseline; justify-content:space-between; gap:18px;
+  }
+  .plate-title-row h2{
     font-family:var(--font-display);
     font-weight:340;
-    font-size:clamp(2rem, 3.6vw, 3rem);
-    line-height:1.04;
-    margin:0 0 18px;
+    font-size:clamp(1.7rem, 2.6vw, 2.3rem);
+    line-height:1.05;
+    margin:0;
     color:var(--parchment);
+    transition:color 0.3s ease;
   }
-  .entry-info p{
-    color:var(--parchment-dim);
-    max-width:480px;
-    margin:0 0 22px;
-  }
-  .entry-specs{
+  .plate-card:hover .plate-title-row h2{ color:var(--accent-bright, var(--brass-bright)); }
+  .plate-status{
+    flex-shrink:0;
     font-family:var(--font-mono);
-    font-size:0.72rem;
-    letter-spacing:0.08em;
+    font-size:0.65rem;
+    letter-spacing:0.12em;
     text-transform:uppercase;
     color:var(--parchment-faint);
-    margin:0 0 30px;
+    white-space:nowrap;
   }
-  .entry-actions{
-    display:flex; align-items:center; gap:18px; flex-wrap:wrap;
-  }
+  .plate-status.available{ color:var(--accent-bright, var(--brass-bright)); }
 
   .btn{
     font-family:var(--font-mono);
@@ -137,26 +147,10 @@
     border-color:var(--accent-bright, var(--brass-bright));
     color:var(--accent-bright, var(--brass-bright));
   }
-  .tag{
-    display:inline-block;
-    font-family:var(--font-mono);
-    font-size:0.65rem;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-    padding:6px 12px;
-    border:1px solid var(--line-strong);
-    border-radius:2px;
-    color:var(--parchment-dim);
-  }
-  .tag.available{
-    border-color:var(--accent, var(--brass));
-    color:var(--accent-bright, var(--brass-bright));
-  }
 
   @media (max-width:860px){
-    .entry{ grid-template-columns:1fr; gap:28px; padding:64px 0; }
-    .entry:nth-of-type(even) .entry-visual{ order:0; }
-    .entry-visual{ min-height:280px; }
+    .gallery{ padding:8px 0 88px; }
+    .gallery-grid{ grid-template-columns:1fr; gap:52px; }
   }
 
   /* ---------- GROW CTA ---------- */
@@ -220,75 +214,66 @@
     </div>
   </section>
 
-  <section class="entries">
+  <section class="gallery">
     <div class="wrap">
+      <div class="gallery-grid">
 
-      <article class="entry" style="--accent:#b58a4a; --accent-bright:#e8c078; --accent-glow:rgba(181,138,74,0.16);">
-        <div class="entry-visual reveal">
-          <img src="assets/images/organ.jpg" alt="The Röver organ, lit in the dark" loading="lazy" />
-          <div class="visual-label"><span>Plate 01 &middot; Heilig-Kreuz-Kirche</span><span>Bevern, DE</span></div>
-        </div>
-        <div class="entry-info reveal">
-          <span class="entry-num">No. 01 &middot; Pipe Organ &middot; 1900s</span>
-          <h2>Historic Organ</h2>
-          <p>A late-romantic German pipe organ, sampled register by register in the church it has inhabited for over a century, with the room&rsquo;s own acoustics built in. Play all 17 stops live in the browser, then take the full instrument home.</p>
-          <p class="entry-specs">17 stops &middot; Multi-mic &middot; 24-bit / 96 kHz &middot; KONTAKT 8+</p>
-          <div class="entry-actions">
-            <a class="btn" href="historic-organ.html">View instrument</a>
-            <span class="tag available">Available</span>
+        <a class="plate-card reveal" href="historic-organ.html" style="--accent:#b58a4a; --accent-bright:#e8c078; --accent-glow:rgba(181,138,74,0.16);">
+          <div class="plate-visual">
+            <img src="assets/images/organ.jpg" alt="The Röver organ, lit in the dark" loading="lazy" />
+            <div class="visual-label"><span>Plate 01 &middot; Heilig-Kreuz-Kirche</span><span>Bevern, DE</span></div>
           </div>
-        </div>
-      </article>
-
-      <article class="entry" style="--accent:#c1782f; --accent-bright:#f2a860; --accent-glow:rgba(193,120,47,0.16);">
-        <div class="entry-visual reveal">
-          <div class="visual-label"><span>Plate 02 &middot; Awaiting photography</span><span>In production</span></div>
-        </div>
-        <div class="entry-info reveal">
-          <span class="entry-num">No. 02 &middot; Electric Piano &middot; 1970s</span>
-          <h2>Tine Piano</h2>
-          <p>The electric stage piano that carried the seventies: hammers striking metal tines over electromagnetic pickups. Sampled key by key across its full dynamic arc, from glassy pianissimo to growling bark.</p>
-          <p class="entry-specs">73 keys &middot; Velocity layers &middot; 24-bit / 96 kHz &middot; KONTAKT 8+</p>
-          <div class="entry-actions">
-            <a class="btn" href="tine-piano.html">View instrument</a>
-            <span class="tag">In production</span>
+          <div class="plate-meta">
+            <span class="plate-num">No. 01 &middot; Pipe Organ &middot; 1900s</span>
+            <div class="plate-title-row">
+              <h2>Historic Organ</h2>
+              <span class="plate-status available">Available</span>
+            </div>
           </div>
-        </div>
-      </article>
+        </a>
 
-      <article class="entry" style="--accent:#5fa8a0; --accent-bright:#93d9d0; --accent-glow:rgba(95,168,160,0.14);">
-        <div class="entry-visual reveal">
-          <img src="assets/images/philicorda-render.jpg" alt="The transistor organ, lit in the dark" loading="lazy" />
-          <div class="visual-label"><span>Plate 03 &middot; Transistor Organ</span><span>1960s</span></div>
-        </div>
-        <div class="entry-info reveal">
-          <span class="entry-num">No. 03 &middot; Home Organ &middot; 1960s</span>
-          <h2>Transistor Organ</h2>
-          <p>A 1960s home organ on slender steel legs: rocker tabs, built-in vibrato, and a tone somewhere between reed organ and space age. Designed as living-room furniture, remembered on garage and lounge records.</p>
-          <p class="entry-specs">Rocker tabs &middot; Vibrato on + off &middot; 24-bit / 96 kHz &middot; KONTAKT 8+</p>
-          <div class="entry-actions">
-            <a class="btn" href="transistor-organ.html">View instrument</a>
-            <span class="tag">In production</span>
+        <a class="plate-card reveal" href="tine-piano.html" style="--accent:#c1782f; --accent-bright:#f2a860; --accent-glow:rgba(193,120,47,0.16);">
+          <div class="plate-visual">
+            <img src="assets/images/rhodes-render.jpg" alt="The tine piano, lit in the dark" loading="lazy" />
+            <div class="visual-label"><span>Plate 02 &middot; Tine Piano</span><span>1970s</span></div>
           </div>
-        </div>
-      </article>
-
-      <article class="entry" style="--accent:#c65947; --accent-bright:#f09a86; --accent-glow:rgba(198,89,71,0.14);">
-        <div class="entry-visual reveal">
-          <div class="visual-label"><span>Plate 04 &middot; Awaiting photography</span><span>In production</span></div>
-        </div>
-        <div class="entry-info reveal">
-          <span class="entry-num">No. 04 &middot; Reed Piano &middot; 1960s</span>
-          <h2>Reed Piano</h2>
-          <p>An electro-mechanical piano voiced by struck steel reeds: soft, it purrs like a vibraphone; hard, it barks. Every key sampled individually, with the built-in vibrato captured on and off.</p>
-          <p class="entry-specs">64 keys &middot; Vibrato on + off &middot; 24-bit / 96 kHz &middot; KONTAKT 8+</p>
-          <div class="entry-actions">
-            <a class="btn" href="reed-piano.html">View instrument</a>
-            <span class="tag">In production</span>
+          <div class="plate-meta">
+            <span class="plate-num">No. 02 &middot; Electric Piano &middot; 1970s</span>
+            <div class="plate-title-row">
+              <h2>Tine Piano</h2>
+              <span class="plate-status">In production</span>
+            </div>
           </div>
-        </div>
-      </article>
+        </a>
 
+        <a class="plate-card reveal" href="transistor-organ.html" style="--accent:#5fa8a0; --accent-bright:#93d9d0; --accent-glow:rgba(95,168,160,0.14);">
+          <div class="plate-visual">
+            <img src="assets/images/philicorda-render.jpg" alt="The transistor organ, lit in the dark" loading="lazy" />
+            <div class="visual-label"><span>Plate 03 &middot; Transistor Organ</span><span>1960s</span></div>
+          </div>
+          <div class="plate-meta">
+            <span class="plate-num">No. 03 &middot; Home Organ &middot; 1960s</span>
+            <div class="plate-title-row">
+              <h2>Transistor Organ</h2>
+              <span class="plate-status">In production</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="plate-card reveal" href="reed-piano.html" style="--accent:#c65947; --accent-bright:#f09a86; --accent-glow:rgba(198,89,71,0.14);">
+          <div class="plate-visual">
+            <div class="visual-label"><span>Plate 04 &middot; Awaiting photography</span><span>In production</span></div>
+          </div>
+          <div class="plate-meta">
+            <span class="plate-num">No. 04 &middot; Reed Piano &middot; 1960s</span>
+            <div class="plate-title-row">
+              <h2>Reed Piano</h2>
+              <span class="plate-status">In production</span>
+            </div>
+          </div>
+        </a>
+
+      </div>
     </div>
   </section>
 
